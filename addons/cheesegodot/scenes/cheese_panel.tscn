@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvol3vuygwvcs"]
+
+[ext_resource type="Script" path="res://addons/cheesegodot/scripts/cheese_panel.gd" id="1_04a3l"]
+[ext_resource type="Texture2D" uid="uid://bd5bi0gyb4sn6" path="res://icon.svg" id="2_66x5y"]
+[ext_resource type="Texture2D" uid="uid://q4tixsyxmtqr" path="res://addons/cheesegodot/textures/tile_grid.png" id="2_fj5a4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4p2x"]
+texture = ExtResource("2_66x5y")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_7ttq3"]
+sources/0 = SubResource("TileSetAtlasSource_a4p2x")
+
+[sub_resource type="LabelSettings" id="LabelSettings_i63je"]
+font_size = 26
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="cheese_panel" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+script = ExtResource("1_04a3l")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 384.0
+color = Color(0.554238, 0.639665, 0.701096, 1)
+
+[node name="displayed_content" type="Node2D" parent="."]
+
+[node name="grid" type="TextureRect" parent="displayed_content"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 624.0
+offset_bottom = 368.0
+texture = ExtResource("2_fj5a4")
+stretch_mode = 1
+
+[node name="tilemap" type="TileMap" parent="displayed_content"]
+tile_set = SubResource("TileSet_7ttq3")
+format = 2
+layer_0/tile_data = PackedInt32Array(393220, 0, 0, 327684, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 524293, 0, 0, 458756, 0, 0, 458755, 0, 0, 393219, 0, 0, 262147, 0, 0, 262146, 0, 0, 196610, 0, 0, 131074, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 131077, 0, 0, 196613, 0, 0, 196612, 0, 0, 196609, 0, 0, 262145, 0, 0, 196611, 0, 0, 131075, 0, 0, 131076, 0, 0, 262148, 0, 0, 196608, 0, 0, 131072, 0, 0, 65536, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 65541, 0, 0, 65542, 0, 0, 131079, 0, 0, 131078, 0, 0, 196614, 0, 0, 131073, 0, 0, 65535, 0, 0, -2, 0, 0, -3, 0, 0, -65539, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 262142, 0, 0, 262143, 0, 0, 65534, 0, 0, 131068, 0, 0, 196604, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -131069, 0, 0, -131068, 0, 0, -65536, 0, 0, -1, 0, 0, 131071, 0, 0, 196607, 0, 0)
+
+[node name="zoom_display" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_right = 200.0
+offset_bottom = 23.0
+text = "1"
+label_settings = SubResource("LabelSettings_i63je")
