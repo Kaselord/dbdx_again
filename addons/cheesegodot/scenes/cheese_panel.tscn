@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvol3vuygwvcs"]
+[gd_scene load_steps=8 format=3 uid="uid://bvol3vuygwvcs"]
 
 [ext_resource type="Script" path="res://addons/cheesegodot/scripts/cheese_panel.gd" id="1_04a3l"]
 [ext_resource type="Texture2D" uid="uid://bd5bi0gyb4sn6" path="res://icon.svg" id="2_66x5y"]
@@ -13,10 +13,17 @@ sources/0 = SubResource("TileSetAtlasSource_a4p2x")
 
 [sub_resource type="LabelSettings" id="LabelSettings_i63je"]
 font_size = 26
-outline_size = 4
+font_color = Color(0, 0.74356, 0.399719, 1)
+outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 
-[node name="cheese_panel" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_qtrwb"]
+font_size = 26
+font_color = Color(1, 0.400728, 0.325607, 1)
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CheeseEditor" type="Control"]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
@@ -26,27 +33,55 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
 script = ExtResource("1_04a3l")
+metadata/_edit_lock_ = true
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 384.0
-color = Color(0.554238, 0.639665, 0.701096, 1)
+color = Color(0.465491, 0.552126, 0.614138, 1)
+metadata/_edit_lock_ = true
 
 [node name="displayed_content" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="grid" type="TextureRect" parent="displayed_content"]
+modulate = Color(0.335289, 0.423816, 0.512518, 1)
 offset_left = -16.0
 offset_top = -16.0
-offset_right = 624.0
-offset_bottom = 368.0
+offset_right = 656.0
+offset_bottom = 400.0
 texture = ExtResource("2_fj5a4")
 stretch_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="tilemap" type="TileMap" parent="displayed_content"]
 tile_set = SubResource("TileSet_7ttq3")
 format = 2
-layer_0/tile_data = PackedInt32Array(393220, 0, 0, 327684, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 524293, 0, 0, 458756, 0, 0, 458755, 0, 0, 393219, 0, 0, 262147, 0, 0, 262146, 0, 0, 196610, 0, 0, 131074, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 131077, 0, 0, 196613, 0, 0, 196612, 0, 0, 196609, 0, 0, 262145, 0, 0, 196611, 0, 0, 131075, 0, 0, 131076, 0, 0, 262148, 0, 0, 196608, 0, 0, 131072, 0, 0, 65536, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 65541, 0, 0, 65542, 0, 0, 131079, 0, 0, 131078, 0, 0, 196614, 0, 0, 131073, 0, 0, 65535, 0, 0, -2, 0, 0, -3, 0, 0, -65539, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 262142, 0, 0, 262143, 0, 0, 65534, 0, 0, 131068, 0, 0, 196604, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -131069, 0, 0, -131068, 0, 0, -65536, 0, 0, -1, 0, 0, 131071, 0, 0, 196607, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="origin_point" type="Polygon2D" parent="displayed_content"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 5, 5, 0, 0, -5, -5, 0)
+metadata/_edit_lock_ = true
+
+[node name="fill" type="Polygon2D" parent="displayed_content/origin_point"]
+color = Color(0.824114, 0, 0.401689, 1)
+polygon = PackedVector2Array(0, 4, 4, 0, 0, -4, -4, 0)
+metadata/_edit_lock_ = true
+
+[node name="tile_indicator" type="ColorRect" parent="displayed_content"]
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 80.0
+offset_bottom = 144.0
+color = Color(1, 1, 1, 0.498039)
+metadata/_edit_lock_ = true
+
+[node name="rect_draw_display" type="Polygon2D" parent="."]
+visible = false
+color = Color(1, 0.305882, 0.341176, 0.372549)
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="zoom_display" type="Label" parent="."]
 layout_mode = 0
@@ -55,3 +90,13 @@ offset_right = 200.0
 offset_bottom = 23.0
 text = "1"
 label_settings = SubResource("LabelSettings_i63je")
+metadata/_edit_lock_ = true
+
+[node name="draw_mode" type="Label" parent="."]
+layout_mode = 0
+offset_left = 105.0
+offset_right = 302.0
+offset_bottom = 36.0
+text = "Brush"
+label_settings = SubResource("LabelSettings_qtrwb")
+metadata/_edit_lock_ = true
