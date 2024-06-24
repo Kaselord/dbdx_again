@@ -1,15 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvol3vuygwvcs"]
+[gd_scene load_steps=7 format=3 uid="uid://bvol3vuygwvcs"]
 
 [ext_resource type="Script" path="res://addons/cheesegodot/scripts/cheese_panel.gd" id="1_04a3l"]
-[ext_resource type="Texture2D" uid="uid://bd5bi0gyb4sn6" path="res://icon.svg" id="2_66x5y"]
 [ext_resource type="Texture2D" uid="uid://q4tixsyxmtqr" path="res://addons/cheesegodot/textures/tile_grid.png" id="2_fj5a4"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4p2x"]
-texture = ExtResource("2_66x5y")
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_7ttq3"]
-sources/0 = SubResource("TileSetAtlasSource_a4p2x")
+[ext_resource type="TileSet" uid="uid://dfofne8tpdja5" path="res://resources/environment_tileset.tres" id="3_35o5a"]
+[ext_resource type="Texture2D" uid="uid://bwawpkrhgylqj" path="res://textures/tiles/tile_atlas_collision.png" id="4_xck4g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i63je"]
 font_size = 26
@@ -24,6 +18,7 @@ outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 
 [node name="CheeseEditor" type="Control"]
+texture_filter = 1
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
@@ -33,20 +28,21 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
 script = ExtResource("1_04a3l")
+bg_color = Color(0.819272, 0.792177, 0.956741, 1)
+grid_color = Color(0.59715, 0.625055, 0.780095, 1)
 metadata/_edit_lock_ = true
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 384.0
-color = Color(0.465491, 0.552126, 0.614138, 1)
 metadata/_edit_lock_ = true
 
 [node name="displayed_content" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
 [node name="grid" type="TextureRect" parent="displayed_content"]
-modulate = Color(0.335289, 0.423816, 0.512518, 1)
+modulate = Color(0.743782, 0.743782, 0.743782, 1)
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 656.0
@@ -56,7 +52,7 @@ stretch_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="tilemap" type="TileMap" parent="displayed_content"]
-tile_set = SubResource("TileSet_7ttq3")
+tile_set = ExtResource("3_35o5a")
 format = 2
 metadata/_edit_lock_ = true
 
@@ -71,15 +67,14 @@ polygon = PackedVector2Array(0, 4, 4, 0, 0, -4, -4, 0)
 metadata/_edit_lock_ = true
 
 [node name="tile_indicator" type="ColorRect" parent="displayed_content"]
-offset_left = 128.0
-offset_top = 48.0
-offset_right = 144.0
-offset_bottom = 64.0
+offset_left = 48.0
+offset_top = 80.0
+offset_right = 64.0
+offset_bottom = 96.0
 color = Color(1, 1, 1, 0.498039)
 metadata/_edit_lock_ = true
 
 [node name="rect_draw_display" type="Polygon2D" parent="."]
-visible = false
 color = Color(1, 0.305882, 0.341176, 0.372549)
 polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
@@ -100,3 +95,23 @@ offset_bottom = 36.0
 text = "Brush"
 label_settings = SubResource("LabelSettings_qtrwb")
 metadata/_edit_lock_ = true
+
+[node name="tile_selection" type="Node2D" parent="."]
+position = Vector2(16, 48)
+
+[node name="color_rect" type="ColorRect" parent="tile_selection"]
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 1024.0
+offset_bottom = 1024.0
+color = Color(0, 0, 0, 0.54902)
+
+[node name="collision_atlas" type="Sprite2D" parent="tile_selection"]
+scale = Vector2(4, 4)
+texture = ExtResource("4_xck4g")
+offset = Vector2(128, 128)
+
+[node name="selection_index" type="Polygon2D" parent="tile_selection"]
+position = Vector2(32, 32)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, -20, 20, 0, 0, 20, -20, 0)

@@ -10,6 +10,10 @@ var start_pos_erasing : Vector2
 # 0 - pencil; 1 - rectangle
 var draw_mode : int = 0
 var tile_to_draw : int
+var selected_tile_indices = [Vector2i(0, 0), Vector2i(0, 0)]
+var selecting_tile : bool = false
+@export var bg_color : Color = Color(0.7, 0.7, 0.7, 1)
+@export var grid_color : Color = Color(1, 1, 1, 1)
 
 
 func _ready():
@@ -18,7 +22,7 @@ func _ready():
 	previous_mouse_position = get_global_mouse_position()
 
 
-func _process(_delta):
+func _process(delta):
 	if visible && mouse_is_overlapping():
 		$background.size = size
 		if display_is_being_moved:
@@ -42,9 +46,23 @@ func _process(_delta):
 		var real_indicator_pos : Vector2 = (mouse_offset - Vector2(8, 8) * zoom_level) / zoom_level
 		$displayed_content/tile_indicator.position = Vector2(snapped(real_indicator_pos.x, 16), snapped(real_indicator_pos.y, 16))
 		
+		if selecting_tile:
+			$tile_selection/selection_index.rotation += TAU * delta
+			var mouse_relative_to_tile_index = get_global_mouse_position() - $tile_selection.global_position
+			var scaler : float = 4.0
+			var snapped_tile = Vector2(mouse_relative_to_tile_index) + Vector2(8*scaler, 8*scaler)
+			snapped_tile.x = clamp(snapped_tile.x, 8*scaler, 254*scaler)
+			snapped_tile.y = clamp(snapped_tile.y, 8*scaler, 254*scaler)
+			snapped_tile.x = snapped(snapped_tile.x, 16*scaler)
+			snapped_tile.y = snapped(snapped_tile.y, 16*scaler)
+			$tile_selection/selection_index.position = snapped_tile - Vector2(1, 1) * 8 * scaler
+			selected_tile_indices[0] = snapped_tile / 256*scaler - Vector2(1, 1)
+		
 	else:
 		display_is_being_moved = false
 		is_drawing = false
+		selecting_tile = false
+		$tile_selection.hide()
 	previous_mouse_position = get_global_mouse_position()
 
 
@@ -53,12 +71,25 @@ func _input(event):
 		if event is InputEventKey:
 			if OS.get_keycode_string(event.physical_keycode) == "R":
 				reset_to_default()
+			select_tile_input(event)
 			switch_draw_mode(event)
 		elif event is InputEventMouseButton:
 			grab_focus()
+			$background.color = bg_color
+			$displayed_content/grid.modulate = grid_color
 			zoom(event)
 			editor_drawing_input(event)
 			move_display(event)
+
+
+func select_tile_input(event : InputEventKey):
+	if OS.get_keycode_string(event.physical_keycode) == "T":
+		if event.pressed:
+			selecting_tile = true
+			$tile_selection.show()
+		else:
+			selecting_tile = false
+			$tile_selection.hide()
 
 
 func show_rect_drawing(tile_size : float):
@@ -111,6 +142,8 @@ func reset_to_default():
 	zoom_level = 1.0
 	$zoom_display.text = "1"
 	$displayed_content.position = Vector2(0, 0)
+	$background.color = bg_color
+	$displayed_content/grid.modulate = grid_color
 
 
 func editor_drawing_input(event : InputEventMouseButton):
@@ -134,18 +167,19 @@ func draw_tiles():
 	if tilemap != null:
 		if draw_mode == 0:
 			if tile_to_draw >= 0:
-				tilemap.set_cell(0, convert_global_to_tile(get_global_mouse_position()), tile_to_draw, Vector2(0, 0))
+				tilemap.set_cell(0, convert_global_to_tile(get_global_mouse_position()), tile_to_draw, selected_tile_indices[0])
 			else:
 				tilemap.erase_cell(0, convert_global_to_tile(get_global_mouse_position()))
 
 
 func draw_tile_rect(start : Vector2i, finish : Vector2i):
 	var tilemap : TileMap = get_node_or_null("displayed_content/tilemap")
+	# loop from the top left value to the bottom right value. +1 because for i in range(a, b) will range from a to (b-1)
 	if tilemap != null:
 		for x in range(min(start.x, finish.x), max(start.x, finish.x) + 1):
 			for y in range(min(start.y, finish.y), max(start.y, finish.y) + 1):
 				if tile_to_draw >= 0:
-					tilemap.set_cell(0, Vector2i(x, y), tile_to_draw, Vector2(0, 0))
+					tilemap.set_cell(0, Vector2i(x, y), tile_to_draw, selected_tile_indices[0])
 				else:
 					tilemap.erase_cell(0, Vector2i(x, y))
 
