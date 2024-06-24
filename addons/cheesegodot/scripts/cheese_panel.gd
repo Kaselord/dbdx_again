@@ -15,6 +15,9 @@ var selecting_tile : bool = false
 var atlas_texture_path : String = ""
 var tileset_path : String = ""
 var init_update : bool = false
+var has_saved : bool = true
+# stuff that still needs to be done:
+# support for placing level elements
 
 
 func _ready():
@@ -71,6 +74,11 @@ func _process(delta):
 		selecting_tile = false
 		$tile_selection.hide()
 	previous_mouse_position = get_global_mouse_position()
+	
+	if has_saved:
+		name = "CheeseEditor"
+	else:
+		name = "CheeseEditor(*)"
 
 
 func _input(event):
@@ -78,6 +86,8 @@ func _input(event):
 		if event is InputEventKey:
 			if OS.get_keycode_string(event.physical_keycode) == "R":
 				reset_to_default()
+			if OS.get_keycode_string(event.physical_keycode) == "S":
+				save()
 			select_tile_input(event)
 			switch_draw_mode(event)
 		elif event is InputEventMouseButton:
@@ -86,6 +96,11 @@ func _input(event):
 			zoom(event)
 			editor_drawing_input(event)
 			move_display(event)
+
+
+func save():
+	# expand this to actually save stuff to a .tscn
+	has_saved = true
 
 
 func select_tile_input(event : InputEventKey):
@@ -191,6 +206,7 @@ func editor_drawing_input(event : InputEventMouseButton):
 func draw_tiles():
 	var tilemap : TileMap = get_node_or_null("displayed_content/tilemap")
 	if tilemap != null:
+		has_saved = false
 		if draw_mode == 0:
 			if tile_to_draw >= 0:
 				tilemap.set_cell(0, convert_global_to_tile(get_global_mouse_position()), tile_to_draw, selected_tile_indices[0])
@@ -202,6 +218,7 @@ func draw_tile_rect(start : Vector2i, finish : Vector2i):
 	var tilemap : TileMap = get_node_or_null("displayed_content/tilemap")
 	# loop from the top left value to the bottom right value. +1 because for i in range(a, b) will range from a to (b-1)
 	if tilemap != null:
+		has_saved = false
 		for x in range(min(start.x, finish.x), max(start.x, finish.x) + 1):
 			for y in range(min(start.y, finish.y), max(start.y, finish.y) + 1):
 				if tile_to_draw >= 0:
