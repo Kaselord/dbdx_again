@@ -1,0 +1,7 @@
+{
+    "bg_color" : "eef1e8",
+    "grid_color" : "b6c6b8",
+    "path_tile_atlas" : "res://textures/tiles/tile_atlas_main.png",
+    "path_tileset" : "res://resources/environment_tileset.tres",
+    "element_directory" : "res//"
+}

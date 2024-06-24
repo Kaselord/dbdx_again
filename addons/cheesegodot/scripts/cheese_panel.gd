@@ -12,8 +12,9 @@ var draw_mode : int = 0
 var tile_to_draw : int
 var selected_tile_indices = [Vector2i(0, 0), Vector2i(0, 0)]
 var selecting_tile : bool = false
-@export var bg_color : Color = Color(0.7, 0.7, 0.7, 1)
-@export var grid_color : Color = Color(1, 1, 1, 1)
+var atlas_texture_path : String = ""
+var tileset_path : String = ""
+var init_update : bool = false
 
 
 func _ready():
@@ -24,6 +25,10 @@ func _ready():
 
 func _process(delta):
 	if visible && mouse_is_overlapping():
+		if !init_update:
+			init_update = true
+			refresh()
+			reset_to_default()
 		$background.size = size
 		if display_is_being_moved:
 			$displayed_content.position += get_global_mouse_position() - previous_mouse_position
@@ -45,6 +50,8 @@ func _process(delta):
 		var mouse_offset : Vector2 = get_global_mouse_position() - $displayed_content.global_position
 		var real_indicator_pos : Vector2 = (mouse_offset - Vector2(8, 8) * zoom_level) / zoom_level
 		$displayed_content/tile_indicator.position = Vector2(snapped(real_indicator_pos.x, 16), snapped(real_indicator_pos.y, 16))
+		
+		$displayed_content/screen_indicator.position = Vector2(0, 0)
 		
 		if selecting_tile:
 			$tile_selection/selection_index.rotation += TAU * delta
@@ -75,8 +82,7 @@ func _input(event):
 			switch_draw_mode(event)
 		elif event is InputEventMouseButton:
 			grab_focus()
-			$background.color = bg_color
-			$displayed_content/grid.modulate = grid_color
+			refresh()
 			zoom(event)
 			editor_drawing_input(event)
 			move_display(event)
@@ -90,6 +96,13 @@ func select_tile_input(event : InputEventKey):
 		else:
 			selecting_tile = false
 			$tile_selection.hide()
+
+
+func get_config():
+	var file = FileAccess.open("res://addons/cheesegodot/config.json", FileAccess.READ)
+	var dictionary_values = str_to_var(file.get_as_text())
+	file.close()
+	return dictionary_values
 
 
 func show_rect_drawing(tile_size : float):
@@ -142,8 +155,21 @@ func reset_to_default():
 	zoom_level = 1.0
 	$zoom_display.text = "1"
 	$displayed_content.position = Vector2(0, 0)
-	$background.color = bg_color
-	$displayed_content/grid.modulate = grid_color
+	refresh()
+
+
+func refresh():
+	var config : Dictionary = get_config()
+	$background.color = Color(config["bg_color"])
+	$displayed_content/grid.modulate = Color(config["grid_color"])
+	if config["path_tile_atlas"] != atlas_texture_path:
+		atlas_texture_path = config["path_tile_atlas"]
+		var atlas_texture : Texture = load(config["path_tile_atlas"])
+		$tile_selection/collision_atlas.texture = atlas_texture
+	if config["path_tileset"] != tileset_path:
+		tileset_path = config["path_tileset"]
+		var used_tileset : TileSet = load(config["path_tileset"])
+		$displayed_content/tilemap.tile_set = used_tileset
 
 
 func editor_drawing_input(event : InputEventMouseButton):
