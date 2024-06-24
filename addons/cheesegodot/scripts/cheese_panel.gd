@@ -33,22 +33,8 @@ func _process(_delta):
 		
 		if is_drawing:
 			draw_tiles()
-			if draw_mode == 1:
-				$rect_draw_display.show()
-				var start_point : Vector2 = convert_global_to_tile(start_pos_drawing)
-				start_point = convert_tile_to_global(start_point) - global_position
-				var end_point : Vector2 = convert_global_to_tile(get_global_mouse_position())
-				end_point = convert_tile_to_global(end_point) - global_position
-				start_point.x += sign(start_point.x - end_point.x) * tile_size * 0.5
-				start_point.y += sign(start_point.y - end_point.y) * tile_size * 0.5
-				end_point.x += sign(end_point.x - start_point.x) * tile_size * 0.5
-				end_point.y += sign(end_point.y - start_point.y) * tile_size * 0.5
-				$rect_draw_display.position = Vector2(0, 0)
-				$rect_draw_display.polygon[0] = start_point
-				$rect_draw_display.polygon[1] = Vector2(start_point.x, end_point.y)
-				$rect_draw_display.polygon[2] = end_point
-				$rect_draw_display.polygon[3] = Vector2(end_point.x, start_point.y)
-				
+			show_rect_drawing(tile_size)
+			
 		else:
 			$rect_draw_display.hide()
 		
@@ -73,6 +59,24 @@ func _input(event):
 			zoom(event)
 			editor_drawing_input(event)
 			move_display(event)
+
+
+func show_rect_drawing(tile_size : float):
+	if draw_mode == 1:
+		$rect_draw_display.show()
+		var start_point : Vector2 = convert_global_to_tile(start_pos_drawing)
+		start_point = convert_tile_to_global(start_point) - global_position
+		var end_point : Vector2 = convert_global_to_tile(get_global_mouse_position())
+		end_point = convert_tile_to_global(end_point) - global_position
+		start_point.x += sign(start_point.x - end_point.x) * tile_size * 0.5
+		start_point.y += sign(start_point.y - end_point.y) * tile_size * 0.5
+		end_point.x += sign(end_point.x - start_point.x) * tile_size * 0.5
+		end_point.y += sign(end_point.y - start_point.y) * tile_size * 0.5
+		$rect_draw_display.position = Vector2(0, 0)
+		$rect_draw_display.polygon[0] = start_point
+		$rect_draw_display.polygon[1] = Vector2(start_point.x, end_point.y)
+		$rect_draw_display.polygon[2] = end_point
+		$rect_draw_display.polygon[3] = Vector2(end_point.x, start_point.y)
 
 
 func switch_draw_mode(event : InputEventKey):
