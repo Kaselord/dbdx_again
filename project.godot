@@ -32,10 +32,6 @@ window/stretch/mode="viewport"
 
 naming/node_name_casing=2
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/cheesegodot/plugin.cfg")
-
 [filesystem]
 
 import/blender/enabled=false
