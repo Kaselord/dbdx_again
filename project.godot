@@ -31,6 +31,11 @@ window/stretch/mode="viewport"
 [editor]
 
 naming/node_name_casing=2
+import/use_multiple_threads=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg")
 
 [filesystem]
 
