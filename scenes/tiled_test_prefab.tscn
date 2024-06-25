@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://13c0ti8d83kf"]
-
-[ext_resource type="Texture2D" uid="uid://bd5bi0gyb4sn6" path="res://icon.svg" id="1_xatgr"]
-
-[node name="tiled_test_prefab" type="Node2D"]
-
-[node name="icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_xatgr")
