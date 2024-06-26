@@ -9,6 +9,7 @@ var movement : ComponentMovement = null
 @export var jump_force : float = 300
 var coyote_buffer : int = 0
 var jump_buffer : int = 0
+var has_released_jump : bool = false
 
 
 func _physics_process(_delta):
@@ -41,8 +42,15 @@ func _process(_delta):
 				execute_jump()
 			else:
 				jump_buffer = 7
+		
+		# variable jump height
+		if Input.is_action_just_released("jump"):
+			if movement.velocity.y < 0 && !has_released_jump:
+				movement.velocity.y *= 0.5
+				has_released_jump = true
 
 
 func execute_jump():
+	has_released_jump = false
 	movement.velocity.y = -jump_force
 	movement.is_floored = false
