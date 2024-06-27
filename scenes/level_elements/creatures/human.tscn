@@ -1,25 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbpb8cljoceuf"]
+[gd_scene load_steps=4 format=3 uid="uid://dbpb8cljoceuf"]
 
 [ext_resource type="PackedScene" uid="uid://bf7pl8d5arjyy" path="res://scenes/components/movement.tscn" id="1_r6atr"]
 [ext_resource type="PackedScene" uid="uid://bfmnsw0prk6vh" path="res://scenes/components/player_controller.tscn" id="2_17n0d"]
-[ext_resource type="Texture2D" uid="uid://bd5bi0gyb4sn6" path="res://icon.svg" id="3_qkd1n"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hr3x6"]
-size = Vector2(32, 32)
+[ext_resource type="PackedScene" uid="uid://blwj6gqdvwple" path="res://scenes/components/visuals/visuals_human.tscn" id="3_xndwg"]
 
 [node name="human" type="CharacterBody2D"]
+slide_on_ceiling = false
 floor_stop_on_slope = false
 floor_max_angle = 1.0472
+
+[node name="visuals_human" parent="." instance=ExtResource("3_xndwg")]
+movement_path = NodePath("../movement")
 
 [node name="movement" parent="." instance=ExtResource("1_r6atr")]
 
 [node name="player_controller" parent="." instance=ExtResource("2_17n0d")]
 movement_path = NodePath("../movement")
 
-[node name="sprite" type="Sprite2D" parent="."]
-texture = ExtResource("3_qkd1n")
-offset = Vector2(0, -16)
-
-[node name="collider" type="CollisionShape2D" parent="."]
-position = Vector2(0, -16)
-shape = SubResource("RectangleShape2D_hr3x6")
+[node name="collision_polygon_2d" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-3, -30, 3, -30, 8, -25, 2, 0, -2, 0, -8, -25)

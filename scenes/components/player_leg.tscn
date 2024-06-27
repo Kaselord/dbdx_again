@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnqq1kd464vfl"]
+
+[ext_resource type="Script" path="res://scripts/components/player_leg.gd" id="1_j45yl"]
+
+[node name="player_leg" type="Line2D"]
+points = PackedVector2Array(0, 0, 0, 2, 0, 5)
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+script = ExtResource("1_j45yl")
+
+[node name="floor_ray" type="RayCast2D" parent="."]
+position = Vector2(0, -1)
+target_position = Vector2(0, 20)

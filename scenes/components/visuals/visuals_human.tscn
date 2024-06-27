@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://blwj6gqdvwple"]
+
+[ext_resource type="Script" path="res://scripts/components/visuals/visuals_human.gd" id="1_b42eo"]
+[ext_resource type="PackedScene" uid="uid://1sbrjjf1862" path="res://scenes/components/trail_line.tscn" id="2_441xh"]
+[ext_resource type="Texture2D" uid="uid://dcb6aqe2otevm" path="res://textures/creatures/human/head.png" id="2_maypv"]
+[ext_resource type="PackedScene" uid="uid://dnqq1kd464vfl" path="res://scenes/components/player_leg.tscn" id="3_6iddh"]
+[ext_resource type="Texture2D" uid="uid://deqfw8085c11t" path="res://textures/creatures/human/hair_strands.png" id="3_b1i7i"]
+[ext_resource type="Texture2D" uid="uid://rxq4u5yjheia" path="res://textures/creatures/human/body.png" id="5_bj1ph"]
+
+[sub_resource type="Curve" id="Curve_n3rq2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.563333, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.896746), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="visuals_human" type="Node2D"]
+script = ExtResource("1_b42eo")
+
+[node name="hair" parent="." instance=ExtResource("2_441xh")]
+position = Vector2(-1, -21)
+points = PackedVector2Array(0, 0, 0, 2, 0, 4, 0, 6, 0, 8, 0, 10)
+width = 16.0
+width_curve = SubResource("Curve_n3rq2")
+default_color = Color(0.747102, 0.793601, 0.820791, 1)
+
+[node name="leg_left" parent="." instance=ExtResource("3_6iddh")]
+position = Vector2(-2, -5)
+
+[node name="leg_right" parent="." instance=ExtResource("3_6iddh")]
+position = Vector2(2, -5)
+
+[node name="body" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+texture = ExtResource("5_bj1ph")
+
+[node name="head" type="Sprite2D" parent="."]
+position = Vector2(0, -23)
+texture = ExtResource("2_maypv")
+
+[node name="strands" type="Sprite2D" parent="head"]
+position = Vector2(1, 0)
+texture = ExtResource("3_b1i7i")

@@ -10,6 +10,10 @@ var movement : ComponentMovement = null
 var coyote_buffer : int = 0
 var jump_buffer : int = 0
 var has_released_jump : bool = false
+@export var SPEED_FLOORED : float = 140.0
+@export var SPEED_MIDAIR : float = 180.0
+@export var ACCEL_FLOORED : float = 0.2
+@export var ACCEL_MIDAIR : float = 0.1
 
 
 func _physics_process(_delta):
@@ -29,11 +33,17 @@ func _process(_delta):
 			jump_buffer -= 1
 		
 		if movement.is_floored:
+			acceleration = ACCEL_FLOORED
+			x_speed = SPEED_FLOORED
+			
 			coyote_buffer = 8
 			if jump_buffer > 0:
 				execute_jump()
 				jump_buffer = 0
 		else:
+			x_speed = SPEED_MIDAIR
+			acceleration = ACCEL_MIDAIR
+			
 			if coyote_buffer > 0:
 				coyote_buffer -= 1
 		

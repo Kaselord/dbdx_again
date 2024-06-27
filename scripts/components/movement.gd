@@ -35,12 +35,15 @@ func _physics_process(delta):
 		else:
 			is_floored = false
 		
+		if get_parent().is_on_ceiling():
+			velocity.y = 0
+		
 	elif get_parent() is Node2D:
 		
 		get_parent().position += velocity * delta
 
 
-func slope_handling(prev_pos : Vector2):
+func slope_handling(prev_pos : Vector2): # please rework to use characterbody's inbuild slope functions!
 	# on floor in current and previous frame?
 	if get_parent().is_on_floor() && is_floored:
 		var diff_to_last_frame : Vector2 =  get_parent().global_position - prev_pos
