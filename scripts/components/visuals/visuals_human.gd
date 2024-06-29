@@ -19,3 +19,10 @@ func _physics_process(_delta):
 			
 			get_node("leg_left").direction = direction
 			get_node("leg_right").direction = direction
+		
+		if movement.is_floored:
+			get_node("arm_left").rotation_degrees = lerp(get_node("arm_left").rotation_degrees, -50.0, 0.2)
+			get_node("arm_right").rotation_degrees = lerp(get_node("arm_right").rotation_degrees, 50.0, 0.2)
+		else:
+			get_node("arm_left").rotation_degrees = movement.velocity.y * 0.2
+			get_node("arm_right").rotation_degrees = -movement.velocity.y * 0.2

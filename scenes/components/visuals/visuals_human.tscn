@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://blwj6gqdvwple"]
+[gd_scene load_steps=9 format=3 uid="uid://blwj6gqdvwple"]
 
 [ext_resource type="Script" path="res://scripts/components/visuals/visuals_human.gd" id="1_b42eo"]
 [ext_resource type="PackedScene" uid="uid://1sbrjjf1862" path="res://scenes/components/trail_line.tscn" id="2_441xh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dnqq1kd464vfl" path="res://scenes/components/player_leg.tscn" id="3_6iddh"]
 [ext_resource type="Texture2D" uid="uid://deqfw8085c11t" path="res://textures/creatures/human/hair_strands.png" id="3_b1i7i"]
 [ext_resource type="Texture2D" uid="uid://rxq4u5yjheia" path="res://textures/creatures/human/body.png" id="5_bj1ph"]
+[ext_resource type="Texture2D" uid="uid://xktk22qwy3vv" path="res://textures/creatures/human/arm.png" id="7_qe8up"]
 
 [sub_resource type="Curve" id="Curve_n3rq2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.563333, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.896746), 0.0, 0.0, 0, 0]
@@ -38,3 +39,14 @@ texture = ExtResource("2_maypv")
 [node name="strands" type="Sprite2D" parent="head"]
 position = Vector2(1, 0)
 texture = ExtResource("3_b1i7i")
+
+[node name="arm_left" type="Sprite2D" parent="."]
+position = Vector2(-2, -11)
+texture = ExtResource("7_qe8up")
+offset = Vector2(-4, -1)
+
+[node name="arm_right" type="Sprite2D" parent="."]
+position = Vector2(2, -11)
+texture = ExtResource("7_qe8up")
+offset = Vector2(4, -1)
+flip_h = true
