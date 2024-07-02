@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://blvkj3tir6g4g"]
 
 [ext_resource type="PackedScene" uid="uid://dbpb8cljoceuf" path="res://scenes/level_elements/creatures/human.tscn" id="1_16n06"]
-[ext_resource type="PackedScene" uid="uid://ulkxehobkxxk" path="res://scenes/maps/aaa.tscn" id="1_dpxe0"]
 [ext_resource type="Script" path="res://scripts/the_world.gd" id="1_ghiaw"]
+[ext_resource type="PackedScene" uid="uid://dvbogk5jlvkvw" path="res://scenes/level_elements/camera.tscn" id="5_xsytm"]
 
 [node name="the_world" type="Node2D"]
 script = ExtResource("1_ghiaw")
 
-[node name="maps" type="Node2D" parent="."]
-
-[node name="aaa" parent="maps" instance=ExtResource("1_dpxe0")]
-
 [node name="creatures" type="Node2D" parent="."]
 
 [node name="human" parent="creatures" instance=ExtResource("1_16n06")]
-position = Vector2(217, 231)
+position = Vector2(260, 352)
+
+[node name="camera" parent="." instance=ExtResource("5_xsytm")]
+offset = Vector2(0, -80)
+thing_to_follow_path = NodePath("../creatures/human")
