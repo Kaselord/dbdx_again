@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="dbdx_again"
+config/name="jungle_project"
 run/main_scene="res://scenes/the_world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
