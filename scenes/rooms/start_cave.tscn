@@ -6,12 +6,11 @@
 
 [node name="start_cave" instance=ExtResource("1_hi0wl")]
 
-[node name="start_cave_back" type="Sprite2D" parent="visuals" index="0"]
-z_index = -1
+[node name="start_cave_back" type="Sprite2D" parent="visuals/back" index="0"]
 position = Vector2(320, 192)
 texture = ExtResource("2_8exvm")
 
-[node name="start_cave_front" type="Sprite2D" parent="visuals" index="1"]
+[node name="start_cave_front" type="Sprite2D" parent="visuals/front" index="0"]
 position = Vector2(320, 192)
 texture = ExtResource("3_ur27n")
 

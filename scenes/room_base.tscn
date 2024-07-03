@@ -7,4 +7,9 @@ script = ExtResource("1_dg5kg")
 
 [node name="visuals" type="Node2D" parent="."]
 
+[node name="back" type="Node2D" parent="visuals"]
+z_index = -1
+
+[node name="front" type="Node2D" parent="visuals"]
+
 [node name="collision" type="StaticBody2D" parent="."]

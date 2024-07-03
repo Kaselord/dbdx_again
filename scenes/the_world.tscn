@@ -11,7 +11,7 @@ script = ExtResource("1_ghiaw")
 [node name="creatures" type="Node2D" parent="."]
 
 [node name="human" parent="creatures" instance=ExtResource("1_16n06")]
-position = Vector2(245, 302)
+position = Vector2(228, 338)
 
 [node name="maps" type="Node2D" parent="."]
 
