@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2j63doddjrwe"]
+
+[ext_resource type="Script" path="res://scripts/room_base.gd" id="1_dg5kg"]
+
+[node name="room_base" type="Node2D"]
+script = ExtResource("1_dg5kg")
+
+[node name="visuals" type="Node2D" parent="."]
+
+[node name="collision" type="StaticBody2D" parent="."]

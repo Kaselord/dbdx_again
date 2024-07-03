@@ -14,7 +14,7 @@ func _physics_process(_delta):
 			floor_ray.rotation_degrees = -sign(floor_ray.rotation_degrees) * 45
 		
 		# is the raycast colliding?
-		if floor_ray.is_colliding() && floor_ray.get_collider().get_class() == "TileMap":
+		if floor_ray.is_colliding() && floor_ray.get_collider().get_class() != "CharacterBody2D":
 			
 			#if last_snap_point.distance_squared_to(global_position) > 64:
 			last_snap_point = floor_ray.get_collision_point()

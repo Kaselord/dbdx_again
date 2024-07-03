@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scripts/level_elements/camera.gd" id="1_xgsjx"]
 
 [node name="camera" type="Camera2D"]
+offset = Vector2(320, 192)
 script = ExtResource("1_xgsjx")

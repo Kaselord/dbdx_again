@@ -8,13 +8,8 @@ var thing_to_follow : Node2D = null
 
 func _physics_process(_delta):
 	if thing_to_follow != null:
-		var velocity_adder : Vector2 = Vector2(0, 0)
-		if thing_to_follow.is_in_group("moving_thing"):
-			var movement_node : Node2D = thing_to_follow.get_node("movement")
-			velocity_adder = movement_node.velocity * velocity_weight
-			velocity_adder.x = clamp(velocity_adder.x, -320, 320)
-			velocity_adder.y = clamp(velocity_adder.y, -192, 192)
-		position = lerp(position, thing_to_follow.position + velocity_adder, interpolation)
+		position = thing_to_follow.position
+		position.x = snapped(position.x - 320, 640)
+		position.y = snapped(position.y - 192, 384)
 	else:
 		thing_to_follow = get_node_or_null(thing_to_follow_path)
-		

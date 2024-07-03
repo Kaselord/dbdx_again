@@ -26,3 +26,5 @@ func _physics_process(_delta):
 		else:
 			get_node("arm_left").rotation_degrees = movement.velocity.y * 0.2
 			get_node("arm_right").rotation_degrees = -movement.velocity.y * 0.2
+		get_node("arm_left").rotation_degrees = clamp(get_node("arm_left").rotation_degrees, -60, 45)
+		get_node("arm_right").rotation_degrees = clamp(get_node("arm_right").rotation_degrees, -45, 60)
